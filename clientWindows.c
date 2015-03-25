@@ -19,7 +19,7 @@ int main(){
     ServerInfoPt = gethostbyname(ServerName);
     memcpy(&SockAdrDef.sin_addr.s_addr, ServerInfoPt->h_addr, ServerInfoPt->h_length);
     OpRes = connect(SocketId, (struct sockaddr *) &SockAdrDef, sizeof(struct sockaddr_in));
-    if (OpRes == -1) {
+    if (OpRes == -1) {)
         fprintf(stderr,"Socket connexion has failed!\n");
         exit(1);
     }
