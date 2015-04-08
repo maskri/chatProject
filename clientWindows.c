@@ -2,6 +2,7 @@
 
 #include <winsock2.h>
 
+
 #elif defined (linux) /* si vous êtes sous Linux */
 
 #include <sys/types.h>
@@ -23,7 +24,7 @@ typedef struct in_addr IN_ADDR;
 #error not defined for this platform
 
 #endif
-
+#include <stdio.h>
 static void init(void)
 {
 #ifdef WIN32
@@ -50,7 +51,7 @@ init();
     int SocketId;
     struct hostent *ServerInfoPt;
     struct sockaddr_in SockAdrDef;
-    int Data, Result;
+    char Data[100], Result[100];
     int OpRes;
     int ServerPort = 1337;
     char * ServerName = "192.168.30.61";
@@ -76,10 +77,14 @@ init();
         printf("Socket connexion has failed!\n");
         exit(1);
     }
-    Data = (int) (rand() % 10000); // Dialog with server
-    printf("%i",Data);
-    send(SocketId,(char *) &Data, sizeof(int), 0);
-    recv(SocketId,(char *) &Result, sizeof(int), 0);
+    printf("Moi : ");
+
+    scanf("%s",&Data); // Dialog with server
+    printf("data : %s \n",Data);
+    send(SocketId, Data, sizeof(char)*100, 0);
+
+    recv(SocketId, Result, sizeof(char)*100, 0);
+    printf("\nResultat : %s \n",Result );
     close(SocketId);
     end();
     return 0;
