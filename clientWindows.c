@@ -53,7 +53,7 @@ init();
     int Data, Result;
     int OpRes;
     int ServerPort = 1337;
-    char * ServerName = "192.168.30.56";
+    char * ServerName = "192.168.30.61";
     SocketId = socket(AF_INET, SOCK_STREAM, 0); // Socket creation
     printf ("socketId : %i \n", SocketId);
     if( SocketId == -1){
@@ -63,18 +63,15 @@ init();
         return 0;
     }
     SockAdrDef.sin_family = AF_INET; // Socket connection
-    printf("family : %i \n",SockAdrDef.sin_family);
-    SockAdrDef.sin_port = ServerPort;
-    printf("port : %i \n",SockAdrDef.sin_port);
+
+    SockAdrDef.sin_port = htons(ServerPort);
+
     ServerInfoPt = gethostbyname(ServerName);
-    printf("server : %s \n",*ServerInfoPt);
+
     memcpy(&SockAdrDef.sin_addr.s_addr, ServerInfoPt->h_addr, ServerInfoPt->h_length);
-     printf ("socketId : %i \n", SocketId);
-     printf("port : %i \n",SockAdrDef.sin_port);
-     printf("family : %i \n",SockAdrDef.sin_family);
-     printf("server : %s \n",*ServerInfoPt);
+
     OpRes = connect(SocketId, (struct sockaddr *) &SockAdrDef, sizeof(struct sockaddr_in));
-    printf("opres : %i",OpRes);
+
     if (OpRes == -1) {
         printf("Socket connexion has failed!\n");
         exit(1);
